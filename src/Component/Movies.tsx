@@ -1,14 +1,21 @@
 import { useEffect, useState } from "react";
-import MovieCard from "./MovieCard";
 import axios from "axios";
+import { MovieType } from "../types/types";
+import MovieCard from "./MovieCard";
 import Pagination from "./Pagination";
+
+type MoviesProps = {
+  handleAddtowatchlist: (movie: MovieType) => void;
+  handleremovetowatchlist: (movie: MovieType) => void;
+  watchlist: MovieType[];
+};
 
 export default function Movies({
   handleAddtowatchlist,
   handleremovetowatchlist,
-  WatchList,
-}) {
-  const [movies, setMovies] = useState([]);
+  watchlist,
+}: MoviesProps) {
+  const [movies, setMovies] = useState<MovieType[]>([]);
   const [pageNo, setpageNo] = useState(1);
 
   const handlePrev = () => {
@@ -20,8 +27,9 @@ export default function Movies({
   };
 
   const handleNext = () => {
-    setpageNo(pageNo + 1);
+    setpageNo((prevPageNo) => prevPageNo + 1);
   };
+
   useEffect(() => {
     axios
       .get(
@@ -33,20 +41,19 @@ export default function Movies({
         console.log(res.data.results);
       });
   }, [pageNo]);
+
   return (
     <div className="p-5">
       <div className="text-2xl m-5 text-center font-bold ">Trending Movies</div>
       <div className="flex flex-row flex-wrap justify-around gap-2 ">
-        {movies.map((movieObj) => {
+        {movies.map((movie) => {
           return (
             <MovieCard
-              key={movieObj.id}
-              movieObj={movieObj}
-              poster_path={movieObj.poster_path}
-              name={movieObj.original_title}
+              key={movie.id}
+              movie={movie}
               handleAddtowatchlist={handleAddtowatchlist}
               handleremovetowatchlist={handleremovetowatchlist}
-              WatchList={WatchList}
+              watchlist={watchlist}
             />
           );
         })}

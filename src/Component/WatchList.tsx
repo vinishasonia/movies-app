@@ -1,4 +1,6 @@
 import BackgroundImage from "../Component/Images/tour-img05.jpg";
+
+
 export default function WatchList() {
   return (
     <>

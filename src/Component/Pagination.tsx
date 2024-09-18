@@ -1,6 +1,13 @@
 import { FaArrowRight } from "react-icons/fa6";
 import { FaArrowLeftLong } from "react-icons/fa6";
-function Pagination({ handlePrev, handleNext, pageNo }) {
+
+type PaginationProps = {
+  handlePrev: () => void;
+  handleNext: () => void;
+  pageNo: number;
+};
+
+function Pagination({ handlePrev, handleNext, pageNo }: PaginationProps) {
   return (
     <>
       <div className="bg-gray-400 p-4 mt-8 flex justify-center">
